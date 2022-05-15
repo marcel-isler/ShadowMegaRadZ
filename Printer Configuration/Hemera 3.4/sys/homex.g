@@ -38,7 +38,7 @@ G0 Y-6 F12000
 G0 Y10 F120 H1
 
 ; Set this location as Y = 348mm
-G92 Y340
+G92 Y345
 
 ; ============= HOME X ====================
 
