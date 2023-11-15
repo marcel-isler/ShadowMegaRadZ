@@ -1,0 +1,67 @@
+MainSail / Klipper Install:
+https://docs.mainsail.xyz/setup/
+
+
+Klipper Screen Install:
+https://www.youtube.com/watch?v=xsSI5uqrT0I
+
+
+cd ~
+git clone https://github.com/th33xitus/kiauh.git
+./kiauh/kiauh.sh
+
+
+// Fix Moonraker issue:
+Run the following commands via ssh:
+cd ~/moonraker
+git pull
+./scripts/data-path-fix.sh
+
+
+Build Klipper Firmware for Octopus:
+https://docs.vorondesign.com/build/software/octopus_klipper.html
+
+MainSail Raspberry Pi Camera Install/config
+https://www.cotofan.com/2021/03/adding-webcam-support-to-mainsailos.html?m=1&fbclid=IwAR32j7K6zd-Gp0NauUGQcWwfdfbKLwmGjfh7wG8y7CTjrdtZt6y12-syDIM
+
+Klipper TMC5160 config issue
+https://github.com/Klipper3d/klipper/issues/5198
+
+ssh pi@shadowklipper.local
+
+ls /dev/serial/by-id
+usb-Klipper_stm32f446xx_320046000E50315939343520-if00
+
+CanBus Octopus:
+usb-CanBoot_stm32f446xx_320046000E50315939343520-if00
+
+/dev/serial/by-id/usb-CanBoot_stm32f446xx_320046000E50315939343520-if00
+
+can0 config:
+Detected UUID: 8333689899dd, Application: CanBoot
+Detected UUID: 3e72cd9a8a53, Application: Klipper
+
+python3 flash_can.py -f ~/klipper/ebb_klipper.bin -u 8333689899dd
+
+/usr/local/bin/mjpg_streamer -i "input_raspicam.so -fps 15 -x 1640 -y 922" -o "output_http.so -w /usr/local/share/mjpg-streamer/www"
+
+
+Z Probe calibration:
+https://www.klipper3d.org/Probe_Calibrate.html
+Z Endstop calibration:
+https://www.klipper3d.org/Manual_Level.html
+
+
+FORCE_MOVE STEPPER=stepper_x DISTANCE=2 VELOCITY=5
+PID_CALIBRATE HEATER=heater_bed TARGET=75
+PID_CALIBRATE HEATER=extruder TARGET=240
+
+
+
+24V Power Cable
+Crimp #8 ring on start
+46mm from end of plug to first loop
+22mm loop strip
+74mm from end of loop to start of next loop
+22mm loop strip
+150mm to end of cable (crimp #8 ring)
